@@ -1,0 +1,9 @@
+# Install a CUDA-enabled PyTorch build separately when GPU training is needed.
+numpy==1.26.4
+scipy==1.17.1
+soundfile>=0.12,<1
+torch==2.8.0
+tqdm>=4.66,<5
+pesq>=0.0.4
+pystoi>=0.4,<1
+tensorboard>=2.16

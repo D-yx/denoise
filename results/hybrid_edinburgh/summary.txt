@@ -1,0 +1,10 @@
+method=hybrid
+dataset=edinburgh
+files=824
+SNR_dB: 12.640854
+SSNR_dB: 6.027764
+SI_SDR_dB: 12.310080
+PESQ: 2.105591
+STOI: 0.889237
+mean_delay_samples: 479.716019
+mean_delay_ms: 9.994084

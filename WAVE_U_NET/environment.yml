@@ -1,0 +1,24 @@
+name: waveunet-repro
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - pip
+  - ffmpeg
+  - libsndfile
+  - 7zip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu128
+      - torch==2.8.0
+      - numpy==1.26.4
+      - librosa==0.10.2.post1
+      - soundfile==0.12.1
+      - musdb==0.4.2
+      - museval==0.4.1
+      - h5py==3.11.0
+      - tqdm==4.66.5
+      - tensorboard==2.17.1
+      - sortedcontainers==2.4.0
+      - pesq==0.0.4
+      - pystoi==0.4.1

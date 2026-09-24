@@ -1,0 +1,20 @@
+name: rnnoise-cuda
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - cmake>=3.25
+  - ninja
+  - m2w64-gcc
+  - numpy=1.26
+  - scipy
+  - libsndfile
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu128
+      - torch==2.8.0
+      - soundfile==0.12.1
+      - tqdm==4.66.5
+      - pesq==0.0.4
+      - pystoi==0.4.1

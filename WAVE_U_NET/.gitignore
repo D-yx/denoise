@@ -1,0 +1,13 @@
+.conda/
+data/MUSDB18-HQ/
+data/*.zip
+data/*.whl
+data/*.aria2
+outputs/
+src/Wave-U-Net-Pytorch/hdf/*.hdf5
+src/Wave-U-Net-Pytorch/checkpoints/*
+!src/Wave-U-Net-Pytorch/checkpoints/README.md
+src/Wave-U-Net-Pytorch/logs/*
+!src/Wave-U-Net-Pytorch/logs/README.md
+__pycache__/
+*.pyc

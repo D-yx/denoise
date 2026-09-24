@@ -1,0 +1,10 @@
+method=hybrid
+dataset=ms-snsd
+files=1100
+SNR_dB: 12.596353
+SSNR_dB: 8.774776
+SI_SDR_dB: 12.326689
+PESQ: 2.177486
+STOI: 0.920028
+mean_delay_samples: 479.895455
+mean_delay_ms: 9.997822

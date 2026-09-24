@@ -1,0 +1,67 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+.idea/
+.vscode/
+**/.git-local-backup/
+
+# Prepared data, training artifacts, and checkpoints
+.prepared/
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.hdf5
+*.f32
+*.pcm
+
+# Datasets: keep only the repository-level download instructions
+dataset/*
+!dataset/README.md
+
+# Generated audio and bulky archives/installers
+*.wav
+*.mp3
+*.flac
+*.zip
+*.tar
+*.tar.gz
+*.tar.zst
+*.7z
+*.whl
+*.exe
+*.dll
+*.a
+
+# Papers are linked from the documentation instead
+*.pdf
+
+# Build output and generated RNNoise model tables
+Hybrid/build/
+Hybrid/src/rnnoise_data.c
+Hybrid/src/rnnoise_data.h
+Hybrid/src/rnnoise_data_little.c
+Hybrid/src/rnnoise_data_little.h
+
+# Wave-U-Net downloads, logs, and generated checkpoints
+WAVE_U_NET/data/
+WAVE_U_NET/src/Wave-U-Net-Pytorch/hdf/*
+!WAVE_U_NET/src/Wave-U-Net-Pytorch/hdf/README.md
+WAVE_U_NET/src/Wave-U-Net-Pytorch/logs/*
+!WAVE_U_NET/src/Wave-U-Net-Pytorch/logs/README.md
+WAVE_U_NET/src/Wave-U-Net-Pytorch/checkpoints/*
+!WAVE_U_NET/src/Wave-U-Net-Pytorch/checkpoints/README.md
+WAVE_U_NET/src/Wave-U-Net-TensorFlow-original/checkpoints/*
+!WAVE_U_NET/src/Wave-U-Net-TensorFlow-original/checkpoints/README.md
+
+# Keep numerical reports; enhanced audio is reproducible and too large for Git
+results/**/enhanced/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

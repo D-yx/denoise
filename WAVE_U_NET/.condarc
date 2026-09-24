@@ -1,0 +1,7 @@
+channels:
+  - conda-forge
+default_channels:
+  - https://conda.anaconda.org/conda-forge
+channel_priority: strict
+show_channel_urls: true
+
