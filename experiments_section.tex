@@ -385,20 +385,23 @@ Wave-U-Net是直接在时域波形上执行端到端映射的一维编码器--�
 20轮未下降时提前停止，并保留验证损失最低的检查点。长语音推理时
 按模型有效输出长度分段，完成预测后按时间顺序拼接。
 
-\subsubsection{训练平台与运行记录（待补充）}
+\subsubsection{训练平台与运行记录}
 
-Wave-U-Net与RNNoise使用相互独立的软件环境和训练平台。待实验完成后，本节将
-记录操作系统、CPU、GPU及显存、Python、PyTorch和CUDA版本，并补充两个数据集
-上的实际训练轮数、最佳验证轮次、训练耗时和模型参数量。在这些信息完成记录前，
-不使用RNNoise的平台配置代替Wave-U-Net的平台配置。
+Wave-U-Net在Linux服务器上使用Python~3.11、PyTorch~2.5.1、CUDA~12.4和
+RTX~4090完成训练，模型包含24,297,913个可训练参数。Edinburgh使用3张GPU，
+训练100轮，最佳模型来自第89轮，验证$L_1$为0.005983，墙钟窗口约3小时42分钟。
+MS-SNSD使用4张GPU，最佳模型来自第77轮，验证$L_1$为0.002729，并在第97轮因
+连续20轮未改善而提前停止，总耗时约5小时。测试均只加载验证损失最低的检查点。
 
 {\begin{CJK*}{UTF8}{zhhei}\subsection{方法对比结果}\end{CJK*}}
 \label{subsec:comparison-results}
 
 表~\ref{tab:method-comparison}以统一格式汇总两个方法在两个数据集上的结果。
 $\uparrow$表示数值越大越好。当前数值均为增强语音相对于干净参考语音的绝对
-指标，未包含含噪输入基线。Wave-U-Net尚未完成汇总，其单元格以``--''标记；
-该符号表示结果待补充，而非零值或实验失败。
+指标。需要注意，Wave-U-Net的MS-SNSD实验采用从\texttt{clean\_train}和
+\texttt{noise\_train}统一划分得到的同域测试集，并保证训练、验证、测试间
+说话人与噪声文件互斥；RNNoise仍使用官方1,100条测试集，因此两行不能作为
+严格的同测试集横向比较。
 
 \begin{table*}[htbp]
 \centering
@@ -420,15 +423,18 @@ SI-SDR$\uparrow$/dB & PESQ$\uparrow$ & STOI$\uparrow$ \\
 & MS-SNSD & 1,100 & 12.596 & 8.775 & 12.327 & 2.177 & 0.920 \\
 \midrule
 \multirow{2}{*}{Wave-U-Net}
-& Edinburgh & 824 & -- & -- & -- & -- & -- \\
-& MS-SNSD & 1,100 & -- & -- & -- & -- & -- \\
+& Edinburgh & 824 & 19.592 & 10.611 & 19.539 & 2.522 & 0.935 \\
+& MS-SNSD（同域） & 682 & 25.704 & 17.680 & 25.647 & 3.018 & 0.872 \\
 \bottomrule
 \end{tabular}}}
 \end{table*}
 
-待Wave-U-Net结果补充后，将分别在Edinburgh和MS-SNSD内比较两种方法，并报告
-各项指标的绝对差值。由于当前仅RNNoise具有完整结果，本节只客观报告已有数值，
-不对两种方法的相对性能作预先判断。
+Edinburgh使用相同的824条官方测试语音，Wave-U-Net在五项指标上均高于本实验的
+RNNoise结果。MS-SNSD的Wave-U-Net含噪输入基线为SNR~19.967~dB、
+SSNR~13.785~dB、SI-SDR~19.968~dB、PESQ~2.450和STOI~0.841；增强后的对应
+增益为$+5.738$~dB、$+3.896$~dB、$+5.679$~dB、$+0.567$和$+0.031$。
+由于两种方法在MS-SNSD上使用不同测试集合，该数据集仅报告各自绝对结果，
+不据此判断方法间优劣。
 
 {\begin{CJK*}{UTF8}{zhhei}\subsection{复现流程}\end{CJK*}}
 \label{subsec:reproducibility}

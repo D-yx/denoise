@@ -1,0 +1,20 @@
+method=wave-u-net
+dataset=ms-snsd
+files=682
+SNR_dB: 25.704199
+SSNR_dB: 17.680483
+SI_SDR_dB: 25.646523
+PESQ: 3.017555
+STOI: 0.871678
+Input_SNR_dB: 19.966575
+Input_SSNR_dB: 13.784587
+Input_SI_SDR_dB: 19.967564
+Input_PESQ: 2.450127
+Input_STOI: 0.840604
+Delta_SNR_dB: 5.737624
+Delta_SSNR_dB: 3.895896
+Delta_SI_SDR_dB: 5.678959
+Delta_PESQ: 0.567428
+Delta_STOI: 0.031074
+mean_delay_samples: 0.000000
+mean_delay_ms: 0.000000

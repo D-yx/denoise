@@ -8,6 +8,7 @@ venv/
 .idea/
 .vscode/
 **/.git-local-backup/
+*.log
 
 # Prepared data, training artifacts, and checkpoints
 .prepared/

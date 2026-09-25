@@ -1,0 +1,10 @@
+method=wave-u-net
+dataset=edinburgh
+files=824
+SNR_dB: 19.592226
+SSNR_dB: 10.610887
+SI_SDR_dB: 19.538710
+PESQ: 2.522167
+STOI: 0.935392
+mean_delay_samples: 0.000000
+mean_delay_ms: 0.000000

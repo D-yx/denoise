@@ -144,6 +144,8 @@ results/hybrid_ms-snsd/
 
 ## 4. Wave-U-Net完整流程
 
+Windows 单卡入口仍可直接使用：
+
 ```powershell
 conda run -n waveunet-repro python wave_u_net_edinburgh.py --cuda
 conda run -n waveunet-repro python wave_u_net_ms_snsd.py --cuda
@@ -162,8 +164,47 @@ Wave-U-Net使用16 kHz单声道 noisy-clean 配对、12层网络、24个初始�
 
 ```text
 results/wave-u-net_edinburgh/
-results/wave-u-net_ms-snsd/
+results/wave-u-net_ms-snsd-indomain/
 ```
+
+### 4.1 Linux服务器复现
+
+使用根目录 `environment.yml` 创建环境后，先执行预处理：
+
+```bash
+conda env create -f environment.yml
+conda activate denoise
+./preprocess_wave_u_net_edinburgh.sh
+./preprocess_wave_u_net_ms_snsd.sh --force
+```
+
+MS-SNSD 的 `--force` 用于保证缓存采用
+`in-domain-speaker-noise-disjoint-v5` 配方。该配方使用47/5/6名互斥说话人和
+102/13/13个互斥噪声文件构造训练、验证和测试，生成27,295个训练/验证对与
+682个测试对。
+
+多卡训练：
+
+```bash
+GPU_COUNT=3 ./train_wave_u_net_edinburgh.sh --no-resume
+GPU_COUNT=4 ./train_wave_u_net_ms_snsd.sh \
+  --no-resume --wave-epochs 100 --wave-batch-size 4 --workers 4
+```
+
+训练中断后去掉 `--no-resume` 即可从 `last.pt` 继续。MS-SNSD 训练脚本会拒绝
+旧版数据缓存；checkpoint 也记录数据配方，防止误用不同实验的数据或模型。
+
+测试：
+
+```bash
+CUDA_VISIBLE_DEVICES=0 conda run --no-capture-output -n denoise \
+  python wave_u_net_edinburgh.py --stage test
+CUDA_VISIBLE_DEVICES=0 conda run --no-capture-output -n denoise \
+  python wave_u_net_ms_snsd.py --stage test
+```
+
+测试同时报告增强输出、noisy输入基线和 `Delta_*` 增益。checkpoint、缓存、训练
+日志和增强 WAV 均为可再生产物，不提交到 Git。
 
 ## 5. 推荐的正式实验顺序
 

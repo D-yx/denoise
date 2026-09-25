@@ -13,8 +13,10 @@
 |---|---|---:|---:|---:|---:|---:|---:|
 | Hybrid | Edinburgh | 824 | 12.641 | 6.028 | 12.310 | 2.106 | 0.889 |
 | Hybrid | MS-SNSD | 1,100 | 12.596 | 8.775 | 12.327 | 2.177 | 0.920 |
+| Wave-U-Net | Edinburgh | 824 | 19.592 | 10.611 | 19.539 | 2.522 | 0.935 |
+| Wave-U-Net | MS-SNSD（同域、说话人与噪声互斥） | 682 | 25.704 | 17.680 | 25.647 | 3.018 | 0.872 |
 
-完整汇总和逐文件指标位于 [`results/`](results/)；增强 WAV 未纳入版本控制，可运行测试阶段重新生成。实验设置、训练耗时和局限性见 [`HYBRID_EXPERIMENTS.md`](HYBRID_EXPERIMENTS.md)。
+完整汇总和逐文件指标位于 [`results/`](results/)；增强 WAV 未纳入版本控制，可运行测试阶段重新生成。实验设置、训练耗时和局限性分别见 [`HYBRID_EXPERIMENTS.md`](HYBRID_EXPERIMENTS.md) 和 [`WAVE_U_NET_EXPERIMENTS.md`](WAVE_U_NET_EXPERIMENTS.md)。
 
 ## 目录结构
 
@@ -33,7 +35,7 @@
 
 ## 环境准备
 
-推荐 Windows 11、Python 3.11、NVIDIA CUDA GPU。Hybrid 的本次实验环境为 PyTorch 2.8.0 + CUDA 12.8；同时需要 CMake、Ninja 和 MinGW-w64 C 编译器。
+RNNoise/Hybrid 的原实验环境为 Windows 11、Python 3.11、PyTorch 2.8.0 + CUDA 12.8，并需要 CMake、Ninja 和 MinGW-w64。Wave-U-Net 最终实验在 Linux、Python 3.11、PyTorch 2.5.1 + CUDA 12.4 和 5×RTX 4090 服务器上完成；Linux 环境见根目录 `environment.yml`。
 
 ```powershell
 python -m venv .venv
@@ -84,11 +86,12 @@ python hybrid_edinburgh.py --sequences 2 --epochs 1 --batch-size 1 --max-test 2 
 
 ## 可复现性说明
 
-随机种子默认为 `0`。MS-SNSD 测试对以固定随机种子和 `{0, 10, 20, 30, 40}` dB SNR 合成。指标包括 SNR、SSNR、SI-SDR、宽带 PESQ 和 STOI。checkpoint 未上传，因此复现结果需要重新训练；GPU、依赖版本和底层算子差异可能造成轻微数值差异。
+随机种子默认为 `0`。MS-SNSD 的 Wave-U-Net v5 实验从 `clean_train/noise_train` 单一原始池按说话人和噪声文件互斥划分 train/validation/test，再用完全相同的 long-form 合成器生成 `{0, 10, 20, 30, 40}` dB 条件，从而排除原先官方 train/test 文件组织与电平分布不一致的影响。该结果属于同域实验，不应冒充官方 `clean_test/noise_test` OOD benchmark。指标包括输入基线、SNR、SSNR、SI-SDR、宽带 PESQ、STOI 及相对增益。checkpoint、预处理缓存和增强 WAV 未上传，需要本地重新训练生成；GPU、依赖版本和底层算子差异可能造成轻微数值差异。
 
 ## 项目文档
 
-- [`experiments_section.tex`](experiments_section.tex)：基于《计算机学报》LaTeX 模板编写的实验章节，包含 RNNoise 已完成结果和 Wave-U-Net 结果预留位置；
+- [`experiments_section.tex`](experiments_section.tex)：基于《计算机学报》LaTeX 模板编写的完整实验章节；
 - [`语音去噪算法复现软件用户手册_GBT8567-2006.docx`](语音去噪算法复现软件用户手册_GBT8567-2006.docx)：按 GB/T 8567—2006 软件用户手册结构编制的环境搭建、数据准备、训练与测试说明；
 - [`RUN_EXPERIMENTS.md`](RUN_EXPERIMENTS.md)：命令行实验运行速查；
 - [`HYBRID_EXPERIMENTS.md`](HYBRID_EXPERIMENTS.md)：RNNoise 实验设置及现有结果记录。
+- [`WAVE_U_NET_EXPERIMENTS.md`](WAVE_U_NET_EXPERIMENTS.md)：Wave-U-Net 数据配方、训练记录及最终结果。
