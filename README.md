@@ -85,3 +85,10 @@ python hybrid_edinburgh.py --sequences 2 --epochs 1 --batch-size 1 --max-test 2 
 ## 可复现性说明
 
 随机种子默认为 `0`。MS-SNSD 测试对以固定随机种子和 `{0, 10, 20, 30, 40}` dB SNR 合成。指标包括 SNR、SSNR、SI-SDR、宽带 PESQ 和 STOI。checkpoint 未上传，因此复现结果需要重新训练；GPU、依赖版本和底层算子差异可能造成轻微数值差异。
+
+## 项目文档
+
+- [`experiments_section.tex`](experiments_section.tex)：基于《计算机学报》LaTeX 模板编写的实验章节，包含 RNNoise 已完成结果和 Wave-U-Net 结果预留位置；
+- [`语音去噪算法复现软件用户手册_GBT8567-2006.docx`](语音去噪算法复现软件用户手册_GBT8567-2006.docx)：按 GB/T 8567—2006 软件用户手册结构编制的环境搭建、数据准备、训练与测试说明；
+- [`RUN_EXPERIMENTS.md`](RUN_EXPERIMENTS.md)：命令行实验运行速查；
+- [`HYBRID_EXPERIMENTS.md`](HYBRID_EXPERIMENTS.md)：RNNoise 实验设置及现有结果记录。
